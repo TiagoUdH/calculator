@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Dict
 from .calculator_1 import Calculator1
 from pytest import raises
 
