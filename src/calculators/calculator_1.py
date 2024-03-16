@@ -21,7 +21,7 @@ class Calculator1:
         return response
         
     def __validate_body(self, body: Dict[str, Any]) -> Union[int, float]:
-        if "number" not in body:
+        if "number" not in body and isinstance(body["number"], (int, float)):
             raise HttpUnprocessableEntityError("body mal formatado!")
         
         input_data = body["number"]
