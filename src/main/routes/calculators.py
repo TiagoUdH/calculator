@@ -3,8 +3,7 @@ from flask import Blueprint, jsonify, request
 from src.main.factories.calculator_1_factory import calculator_1_factory
 from src.main.factories.calculator_2_factory import calculator_2_factory
 from src.main.factories.calculator_3_factory import calculator_3_factory
-
-from src.calculators.calculator_4 import Calculator4
+from src.main.factories.calculator_4_factory import calculator_4_factory
 
 from src.errors.error_controller import handle_errors
 from src.drivers.numpy_handler import NumpyHandler
@@ -53,8 +52,7 @@ def calculator_3():
 @calc_route_bp.route("/calculator/4", methods=["POST"])
 def calculator_4():
     try:
-        numpy_handler = NumpyHandler()
-        calc = Calculator4(numpy_handler)
+        calc = calculator_4_factory()
         response = calc.calculate(request)
         
         return jsonify(response), 200
