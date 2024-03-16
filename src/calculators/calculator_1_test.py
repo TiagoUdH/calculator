@@ -1,6 +1,8 @@
 from typing import Dict
-from .calculator_1 import Calculator1
 from pytest import raises
+
+from src.errors.http_unprocessable_entity import HttpUnprocessableEntityError
+from .calculator_1 import Calculator1
 
 class MockRequest:
     
@@ -26,7 +28,8 @@ def test_calculate_with_body_error():
     
     calculator_1 = Calculator1()
     
-    with raises(Exception) as exc_info:
+    with raises(HttpUnprocessableEntityError) as exc_info:
         calculator_1.calculate(mock_request)
-        
+    
+    assert isinstance(exc_info.value, HttpUnprocessableEntityError)
     assert str(exc_info.value) == "body mal formatado!"

@@ -20,7 +20,7 @@ class Calculator2:
         return formated_response
         
     def __validate_body(self, body: Dict[str, Any]) -> List[Union[int, float]]:
-        if "numbers" not in body and all(isinstance(num, (int, float)) for num in body["numbers"]):
+        if "numbers" not in body or not all(isinstance(num, (int, float)) for num in body["numbers"]):
             raise HttpUnprocessableEntityError("body mal formatado!")
         
         input_data = body["numbers"]

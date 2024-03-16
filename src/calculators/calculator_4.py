@@ -10,7 +10,7 @@ class Calculator4():
         self.driver_handler = driver_handler
         
     def calculate(self, request: FlaskRequest):
-        body = request.json()
+        body = request.json
         input_data = self.__validate_body(body)
         
         mean = self.__proccess_data(input_data)
@@ -20,7 +20,7 @@ class Calculator4():
         return formatted_response       
         
     def __validate_body(self, body: Dict[str, Any]) -> List[Union[int, float]]:      
-        if "numbers" not in body and all(isinstance(num, (int, float)) for num in body["numbers"]):
+        if "numbers" not in body or not all(isinstance(num, (int, float)) for num in body["numbers"]):
             raise HttpUnprocessableEntityError("body mal formatado!")
         
         input_data = body["numbers"]

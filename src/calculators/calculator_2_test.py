@@ -1,6 +1,9 @@
 from typing import Dict, List
+from pytest import raises
+
 from .calculator_2 import Calculator2
 from src.drivers.numpy_handler import NumpyHandler
+from src.errors.http_unprocessable_entity import HttpUnprocessableEntityError
 
 class MockRequest:
     
@@ -33,3 +36,15 @@ def test_calculate():
     
     assert isinstance(formated_response, dict)
     assert formated_response == {'data': {'Calculator': 2, 'result': 0.33}}
+    
+def test_calculate_with_body_error():
+    mock_request = MockRequest(body={ "something": 1 })
+    
+    driver = MockDriverHandler()
+    calculator_2 = Calculator2(driver)
+    
+    with raises(HttpUnprocessableEntityError) as exc_info:
+        calculator_2.calculate(mock_request)
+    
+    assert isinstance(exc_info.value, HttpUnprocessableEntityError)
+    assert str(exc_info.value) == "body mal formatado!"
